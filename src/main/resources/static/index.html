@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <title>Recipe Finder</title>
     <link rel="stylesheet" href="styles.css">
-    <script>
+    <!-- <script>
         // define the callAPI function that takes a first name and last name as parameters
         var callAPI = (ingredient1,ingredient2)=>{
             // instantiate a headers object
@@ -25,7 +25,7 @@
             .then(result => alert(JSON.parse(result).body))
             .catch(error => console.log('error', error));
         }
-    </script>
+    </script> -->
 </head>
 <body>
     <form>
@@ -39,8 +39,8 @@
             <input type="text" id="ing2">
         </div>
         <div>
-            <button class="submit-button" type="button" onclick="callAPI(document.getElementById('ing1').value, 
-            document.getElementById('ing2').value)">Search Recipe</button>
+            <!-- <button class="submit-button" type="button" onclick="callAPI(document.getElementById('ing1').value, 
+            document.getElementById('ing2').value)">Search Recipe</button> -->
         </div>
     </form>
 </body>
