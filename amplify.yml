@@ -1,0 +1,16 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install  # or any other build command if you are using a framework
+    build:
+      commands:
+        - npm run build  # if using a build step
+  artifacts:
+    baseDirectory: src/main/resources/static  # Specify the folder where your static files are
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
