@@ -21,6 +21,11 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+     <dependency>
+        <groupId>com.amazonaws</groupId>
+        <artifactId>aws-java-sdk-dynamodb</artifactId>
+        <version>1.12.300</version> <!-- Use the latest version -->
+    </dependency>
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-lambda-java-core</artifactId>

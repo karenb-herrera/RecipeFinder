@@ -21,26 +21,91 @@
             };
             // make API call with parameters and use promises to get response
             fetch("https://cmc7wj7by3.execute-api.us-west-2.amazonaws.com/dev", requestOptions)
-            .then(response => response.text())
-            .then(result => alert(JSON.parse(result).body))
+            .then(response => response.json())
+            .then(result => 
+                displayResults(result.body)
+            )
             .catch(error => console.log('error', error));
+        }
+
+        var addRecipe = () =>{
+            var recipeName = document.getElementById('name').value;
+            var recipeIngredients = document.getElementById('ingredientsList').value.split(',').map(ing => ing.trim());
+            var recipeProcess = document.getElementById('process').value;
+
+            // instantiate a headers object
+            var myHeaders = new Headers();
+            // add content type header to object
+            myHeaders.append("Content-Type", "application/json");
+            // using built in JSON utility package turn object to string and store in a variable
+            var raw = JSON.stringify({"name":recipeName,"ingredientsList":recipeIngredients, "process":recipeProcess});
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://cmc7wj7by3.execute-api.us-west-2.amazonaws.com/dev", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                    alert("Recipe added successfully");
+                    document.getElementById('recipeForm').reset();
+                }
+            )
+            .catch(error => console.log('error', error));
+
+        };
+
+        function displayResults(results){
+            const resultDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; //clear prev results
+            results.forEach(recipe =>{
+                const recipeElement = document.createElement('div');
+                recipeElement.textContent = recipe;
+                resultsDiv.appendChild(recipeElement);
+            });
         }
     </script>
 </head>
 <body>
     <form>
-        <h1>Welcome! Please type your ingredients</h1>
-        <div>
-            <label>First ingredient: </label>
-            <input type="text" id="ing1">
-        </div>
-        <div>
-            <label>Second ingredient: </label>
-            <input type="text" id="ing2">
-        </div>
-        <div>
-            <button class="submit-button" type="button" onclick="callAPI(document.getElementById('ing1').value, 
-            document.getElementById('ing2').value)">Search Recipe</button>
-        </div>
+        <h1>Welcome!</h1>
+        <form id="recipeForm">
+            <h2>You can add a new recipe here: </h2>
+            <div>
+                <label> Recipe Name: </label>
+                <input type="text" id="name" required>
+            </div>
+            <div>
+                <label> Ingredients (comma separated): </label>
+                <input type="text" id="ingredientsList" required>
+            </div>
+            <div>
+                <label>Process: </label>
+                <textarea id="process" required></textarea>
+            </div>
+            <div>
+                <button type="button" onclick="addRecipe()">Add Recipe</button>
+            </div>
+        </form>
+        <h2>Or...</h2>
+        <form id="ingredients-form">
+            <h2>You can insert the ingredients you have to get a recipe:</h2>
+            <div>
+                <label>First ingredient: </label>
+                <input type="text" id="ing1">
+            </div>
+            <div>
+                <label>Second ingredient: </label>
+                <input type="text" id="ing2">
+            </div>
+            <div>
+                <button class="submit-button" type="button" onclick="callAPI(document.getElementById('ing1').value, 
+                document.getElementById('ing2').value)">Search Recipe</button>
+            </div>
+        </form>
+        <div id="results"></div>
     </form>
 </body>
